@@ -6,7 +6,7 @@ The dataset.py file creates the training dataset class to be fed into the Convol
 
 ![CNN_Archi](https://user-images.githubusercontent.com/32497274/34506710-30363d94-effd-11e7-864a-bec0d7153721.PNG)
 
-The model acheived 93% accuracy on the validation set. A few results are shown below -
+The model acheived 85% accuracy on the validation set. A few results are shown below -
 ![results](https://user-images.githubusercontent.com/32497274/34510394-8e4ec3e6-f021-11e7-8a70-394219f76ff2.PNG)
 
 MATLAB was used to prepare the data. Regions of Interest were sliced into smaller 128 x 128 pixel images and used for training - 
