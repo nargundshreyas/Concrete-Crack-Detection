@@ -23,11 +23,13 @@ The directory structure is assumed to be the following- (For example considering
         in_dir/class3/test/         - Contains all the validation images for class 3<br />
   
 To train the network run the command with the following arguments:<br />
-'python Train_CD.py --in_dir=DIRECTORY_NAME'		(directory containing training data)<br />
-		    '--iter=NUMBER_OF_ITERATIONS' 	(number of training iterations. Default-1500)<br />
-		    '--save_folder=DIRECTORY_NAME' 	(directory to save meta files and checkpoints)<br />
+`python Train_CD.py`<br />
+`--in_dir=DIRECTORY_NAME`		(directory containing training data)<br />
+`--iter=NUMBER_OF_ITERATIONS` 		(number of training iterations. Default-1500)<br />
+`--save_folder=DIRECTORY_NAME` 		(directory to save meta files and checkpoints)<br />
 
 After model has been trained, meta_files are saved into 'save_folder'. To test the model, run the command with the following arguments:<br />
-'python Running.py 	--in_dir=DIRECTORY_NAME'		(directory containing unlabeled test data)<br />
-			'--meta_file=LOCATION_OF_META_FILE' 	(path for meta_file)<br />
-			'--CP_dir=DIRECTORY_NAME' 		(directory containing checkpoints)<br />
+`python Running.py` 	
+`--in_dir=DIRECTORY_NAME`		(directory containing unlabeled test data)<br />
+`--meta_file=LOCATION_OF_META_FILE` 	(path for meta_file)<br />
+`--CP_dir=DIRECTORY_NAME` 		(directory containing checkpoints)<br />
