@@ -29,7 +29,7 @@ To train the network run the command with the following arguments:<br />
 `--save_folder=DIRECTORY_NAME` 		(directory to save meta files and checkpoints)<br />
 
 After model has been trained, meta_files are saved into 'save_folder'. To test the model, run the command with the following arguments:<br />
-`python Running.py` 	
+`python Running.py` <br />
 `--in_dir=DIRECTORY_NAME`		(directory containing unlabeled test data)<br />
 `--meta_file=LOCATION_OF_META_FILE` 	(path for meta_file)<br />
 `--CP_dir=DIRECTORY_NAME` 		(directory containing checkpoints)<br />
