@@ -102,9 +102,9 @@ class DataSet:
         Master/class1/              - Contains all the training images for class 1
         Master/class2/              - Contains all the training images for class 2
         Master/class3/              - Contains all the training images for class 3
-        Master/class1/validation/   - Contains all the validation images for class 1
-        Master/class2/validation/   - Contains all the validation images for class 2
-        Master/class3/validation/   - Contains all the validation images for class 3
+        Master/class1/test/         - Contains all the validation images for class 1
+        Master/class2/test/         - Contains all the validation images for class 2
+        Master/class3/test/         - Contains all the validation images for class 3
         This means there are 3 classes called: class1, class2 and class3.
         The number of folders in "Masters" will correspond to the number of classes
         :param in_dir:

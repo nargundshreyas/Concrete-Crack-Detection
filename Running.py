@@ -3,8 +3,9 @@ import tensorflow as tf
 import os as os
 from cache import cache
 from Train_CD import Model
-from matplotlib.image import imread
-import scipy.misc
+import cv2,sys
+import argparse
+from pathlib import Path
 def break_image(test_image, size):
     
     h,w= np.shape(test_image)[0],np.shape(test_image)[1]
@@ -76,22 +77,48 @@ class Dataset_test:
 
     def load_images(self,image_paths):
         # Load the images from disk.
-        images = [imread(path) for path in image_paths]
+        images = [cv2.imread(path) for path in image_paths]
     
         # Convert to a numpy array and returns it in the form of [num_images,size,size,channel]
         return np.asarray(images)
 
-def main():
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='Testing Network')
+    parser.add_argument('--in_dir',dest='in_dir',type=str,default='cracky_test')
+    parser.add_argument('--meta_file',dest='meta_file',type=str,default='random')
+    parser.add_argument('--CP_dir',dest='chk_point_dir',type=str,default='random')
+    return parser.parse_args()
+
+def main(args):
+    #File names are saved into a cache file
+    args=parse_arguments()
     dataset_test = cache(cache_path='my_dataset_cache_test.pkl',
                     fn=Dataset_test, 
-                    in_dir='cracky_test/')
+                    in_dir=args.in_dir)
     test_images = dataset_test.images
 
     graph = tf.Graph()
     with graph.as_default():
         with tf.Session() as sess:
-            #import the model located in "temp" dir
-            imported_meta = tf.train.import_meta_graph("temp/model_final.meta")
+            #import the model dir
+            file_=Path(args.meta_file)
+            try:
+                abs_path=file_.resolve()
+            except FileNotFoundError:
+                print('Meta File Not found')
+                sys.exit()
+            else:
+                imported_meta = tf.train.import_meta_graph(args.meta_file)
+            
+                       
+            if os.path.isdir(args.chk_point_dir):
+                imported_meta = tf.train.import_meta_graph(args.meta_file)
+            else:
+                print("Check Point Directory does not exsist")
+                sys.exit()
+            
+                
             imported_meta.restore(sess, tf.train.latest_checkpoint('./temp'))
             x = graph.get_operation_by_name("x").outputs[0]
             predictions = graph.get_operation_by_name("predictions").outputs[0]
@@ -106,7 +133,7 @@ def main():
                 batch_predictions = sess.run(predictions, feed_dict = feed_dict)
             
                 matrix_pred = batch_predictions.reshape((h_no,w_no))
-                
+                #Concentrate after this for post processing
                 for i in range(0,h_no):
                     for j in range(0,w_no):
                         a = matrix_pred[i,j]
@@ -115,10 +142,10 @@ def main():
                 cropped_image = image[0:h_no*128,0:w_no*128,:]                    
                 pred_image = np.multiply(output_image,cropped_image)
                 counter = 0
-                print("Saved {} Image".format(counter+1))
-                scipy.misc.imsave('outfile_{}.jpg'.format(counter), pred_image)
+                print("Saved {} Images".format(counter+1))
+                cv2.imwrite('outfile_{}.jpg'.format(counter), pred_image)
                 counter+=1
                 
 if __name__ == '__main__':
-    main()
+    main(sys.argv)
     

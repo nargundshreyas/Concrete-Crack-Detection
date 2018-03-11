@@ -1,12 +1,13 @@
 """
-Coede to train the model
+Code to train the model
 """
 import tensorflow as tf
 import numpy as np
 import time
 from datetime import timedelta
 from dataset import load_cached
-from matplotlib.image import imread
+#from matplotlib.image import imread
+import cv2,sys,argparse
 
 #Initialzing the conv and max_pool layers
 #####################################################
@@ -82,18 +83,19 @@ def flatten_layer(layer):
 ####################################################
     
 class Model:
-    def __init__(self):
-        dataset = load_cached(cache_path='my_dataset_cache.pkl', in_dir='cracky/')
+    def __init__(self,in_dir,save_folder):
+        dataset = load_cached(cache_path='my_dataset_cache.pkl', in_dir=in_dir)
         self.num_classes = dataset.num_classes
 
         image_paths_train, cls_train, self.labels_train = dataset.get_training_set()
         image_paths_test, self.cls_test, self.labels_test = dataset.get_test_set()
         
+        ##############################IMAGE PARAMETERS#####################################
         self.img_size = 128
         self.num_channels = 3
         self.train_batch_size = 64
         self.test_batch_size = 64
-        
+        ###################################################################################
         self.x = tf.placeholder(tf.float32, shape=[None, self.img_size,self.img_size,self.num_channels], name='x')
         self.x_image = tf.reshape(self.x, [-1, self.img_size, self.img_size, self.num_channels])
         self.y_true = tf.placeholder(tf.float32, shape=[None, self.num_classes], name='y_true')
@@ -103,13 +105,15 @@ class Model:
         self.y_pred_cls = None
         self.train_images= self.load_images(image_paths_train)
         self.test_images= self.load_images(image_paths_test)
+        self.save_folder=save_folder
         self.optimizer,self.accuracy = self.define_model()        
         
     def load_images(self,image_paths):
         # Load the images from disk.
-        images = [imread(path) for path in image_paths]
+        images = [cv2.imread(path,1) for path in image_paths]
         
         # Convert to a numpy array and return it in the form of [num_images,size,size,channel]
+        #print(np.asarray(images[0]).shape)
         return np.asarray(images)
     
     def define_model(self):
@@ -283,27 +287,36 @@ class Model:
                     # Ending time.
                     end_time = time.time()
                 if i%100 ==0:
-                    #Calculate the accuracy on the test set
+                    #Calculate the accuracy on the test set every 100 iterations
                     self.print_test_accuracy(sess)
                 
                 if i%500 == 0:
-                    saver.save(sess, "temp/model_final",i)
+                    #Saves every 500 iterations
+                    saver.save(sess, os.path.join(self.save_folder,'model')) #Change this according to your convenience
     
             # Difference between start and end-times.
             time_dif = end_time - start_time
             self.print_test_accuracy(sess)
             # Print the time-usage.
             print("Time usage: " + str(timedelta(seconds=int(round(time_dif)))))
-            saver.save(sess, "temp/model_final_2")
+            saver.save(sess, os.path.join(self.save_folder,'model_complete'))
             
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='Training Network')
+    parser.add_argument('--in_dir',dest='in_dir',type=str,default='cracky')
+    parser.add_argument('--iter',dest='num_iterations',type=int,default=1500)
+    parser.add_argument('--save_folder',dest='save_folder',tpe=str,default=os.getcwd())
+    return parser.parse_args()
             
-def  main():
-    num_iterations = 1200
-    model = Model()
+def  main(args):
+    args=parse_arguments()
+    num_iterations = args.num_iterations
+    
+    model = Model(args.in_dir,args.save_folder)
     model.optimize(num_iterations)
     
 if __name__ == '__main__':
-    main()
+    main(sys.argv)
 
 
 
