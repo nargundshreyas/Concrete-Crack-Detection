@@ -11,6 +11,9 @@ MATLAB was used to prepare the data. Regions of Interest were sliced into smalle
 
 ![roi](https://user-images.githubusercontent.com/32497274/34510417-c3207466-f021-11e7-9bf7-c91c034a70be.PNG)
 
+Dependencies required-
+-TensorFlow
+-OpenCV
 
 The dataset.py file creates the training dataset class to be fed into the Convolutional Neural Network. This class automatically determines the number of classes by the number of folders in 'in_dir' (number of folders=number of classes)
 
