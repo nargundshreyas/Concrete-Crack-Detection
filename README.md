@@ -18,12 +18,12 @@ Dependencies required-<br />
 The dataset.py file creates the training dataset class to be fed into the Convolutional Neural Network. This class automatically determines the number of classes by the number of folders in 'in_dir' (number of folders=number of classes)
 
 The directory structure is assumed to be the following- (For example considering 3 classes)<br />
-        in_dir/class1/              - Contains all the training images for class 1<br />
-        in_dir/class2/              - Contains all the training images for class 2<br />
-        in_dir/class3/              - Contains all the training images for class 3<br />
-        in_dir/class1/test/         - Contains all the validation images for class 1<br />
-        in_dir/class2/test/         - Contains all the validation images for class 2<br />
-        in_dir/class3/test/         - Contains all the validation images for class 3<br />
+* in_dir/class1/              - Contains all the training images for class 1<br />
+        * test/         - Contains all the validation images for class 1 <br />
+* in_dir/class2/              - Contains all the training images for class 2<br />
+        * test/         - Contains all the validation images for class 2<br />
+* in_dir/class3/              - Contains all the training images for class 3<br />
+        * test/         - Contains all the validation images for class 3<br />
   
 To train the network run the command with the following arguments:<br />
 `python Train_CD.py`<br />
