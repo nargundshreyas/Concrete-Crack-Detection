@@ -28,8 +28,8 @@ class Dataset_test:
 
         # Input directory.
         self.in_dir = in_dir
-        model = Model()
-
+        
+        model=Model()
         # Convert all file-extensions to lower-case.
         self.exts = tuple(ext.lower() for ext in exts)
 
