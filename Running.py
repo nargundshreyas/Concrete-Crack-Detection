@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 import os as os
-from cache import cache
+from dataset import cache
 from Train_CD import Model
 import cv2,sys
 import argparse
