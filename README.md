@@ -17,6 +17,9 @@ Dependencies required-<br />
 
 The dataset.py file creates the training dataset class to be fed into the Convolutional Neural Network. This class automatically determines the number of classes by the number of folders in 'in_dir' (number of folders=number of classes)
 
+
+NOTE: This script utilizes an already saved cache file. The cache file contains the filenames of the data. If the cache file doesn't exist, a new one created. If the data has been altered with, please delete the old cache file and run the script again. This applies for both `Running.py` and `Train_CD.py`. This was my first ever Deep Learning project hence, the naive approach. I'll streamline this once I get some time, or gladly accept a pull request!
+
 The directory structure is assumed to be the following- (For example considering 3 classes)<br />
 * in_dir/class1/              - Contains all the training images for class 1<br />
     * test/         - Contains all the validation images for class 1 <br />
@@ -36,3 +39,9 @@ After model has been trained, meta_files are saved into 'save_folder'. To test t
 `--in_dir=DIRECTORY_NAME`		(directory containing unlabeled test data)<br />
 `--meta_file=LOCATION_OF_META_FILE` 	(path for meta_file)<br />
 `--CP_dir=DIRECTORY_NAME` 		(directory containing checkpoints)<br />
+`--save_dir=DIRECTORY_NAME` 		(directory to save output images)<br />
+
+## TODO:
+
+ - [] Streamline data loading; remove cache file system
+ - [] Combine training and testing scripts into one
