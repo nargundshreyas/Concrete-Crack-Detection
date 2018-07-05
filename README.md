@@ -43,5 +43,5 @@ After model has been trained, meta_files are saved into 'save_folder'. To test t
 
 ## TODO:
 
- - [] Streamline data loading; remove cache file system
- - [] Combine training and testing scripts into one
+ - [ ] Streamline data loading; remove cache file system
+ - [ ] Combine training and testing scripts into one
