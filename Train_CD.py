@@ -83,7 +83,7 @@ def flatten_layer(layer):
 ####################################################
     
 class Model:
-    def __init__(self,in_dir,save_folder):
+    def __init__(self,in_dir,save_folder=None):
         dataset = load_cached(cache_path='my_dataset_cache.pkl', in_dir=in_dir)
         self.num_classes = dataset.num_classes
 

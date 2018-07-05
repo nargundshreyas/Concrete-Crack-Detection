@@ -6,6 +6,7 @@ from Train_CD import Model
 import cv2,sys
 import argparse
 from pathlib import Path
+
 def break_image(test_image, size):
     
     h,w= np.shape(test_image)[0],np.shape(test_image)[1]
@@ -29,7 +30,7 @@ class Dataset_test:
         # Input directory.
         self.in_dir = in_dir
         
-        model=Model()
+        model=Model(in_dir)
         # Convert all file-extensions to lower-case.
         self.exts = tuple(ext.lower() for ext in exts)
 
@@ -86,8 +87,9 @@ class Dataset_test:
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Testing Network')
     parser.add_argument('--in_dir',dest='in_dir',type=str,default='cracky_test')
-    parser.add_argument('--meta_file',dest='meta_file',type=str,default='random')
-    parser.add_argument('--CP_dir',dest='chk_point_dir',type=str,default='random')
+    parser.add_argument('--meta_file',dest='meta_file',type=str,default=None)
+    parser.add_argument('--CP_dir',dest='chk_point_dir',type=str,default=None)
+    parser.add_argument('--save_dir',type=str,default=os.getcwd())
     return parser.parse_args()
 
 def main(args):
@@ -110,21 +112,17 @@ def main(args):
                 sys.exit()
             else:
                 imported_meta = tf.train.import_meta_graph(args.meta_file)
-            
                        
             if os.path.isdir(args.chk_point_dir):
-                imported_meta = tf.train.import_meta_graph(args.meta_file)
+                imported_meta.restore(sess, tf.train.latest_checkpoint(args.chk_point_dir))
             else:
-                print("Check Point Directory does not exsist")
-                sys.exit()
+                sys.exit("Check Point Directory does not exist")
             
-                
-            imported_meta.restore(sess, tf.train.latest_checkpoint('./temp'))
             x = graph.get_operation_by_name("x").outputs[0]
             predictions = graph.get_operation_by_name("predictions").outputs[0]
             
             #Take one image at a time, pass it through the network and save it
-            for image in test_images:
+            for counter,image in enumerate(test_images):
                 broken_image,h,w,h_no,w_no = break_image(image,128)
         
                 output_image = np.zeros((h_no*128,w_no*128,3),dtype = np.uint8)
@@ -141,11 +139,10 @@ def main(args):
             
                 cropped_image = image[0:h_no*128,0:w_no*128,:]                    
                 pred_image = np.multiply(output_image,cropped_image)
-                counter = 0
-                print("Saved {} Images".format(counter+1))
-                cv2.imwrite('outfile_{}.jpg'.format(counter), pred_image)
-                counter+=1
-                
+
+                print("Saved {} Image(s)".format(counter+1))
+                cv2.imwrite(os.path.join(args.save_dir,'outfile_{}.jpg'.format(counter+1)), pred_image)
+                                
 if __name__ == '__main__':
     main(sys.argv)
     
