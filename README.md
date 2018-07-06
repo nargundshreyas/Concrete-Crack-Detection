@@ -30,10 +30,6 @@ The directory structure is assumed to be the following- (For example considering
   
 To train the network run the command with the following arguments:<br />
 `python Train_CD.py`<br />
-Markdown | Less | Pretty
---- | --- | ---
-*Still* | `renders` | **nicely**
-1 | 2 | 3
 
 Argument | Details | Default
 --- | --- | --- 
@@ -41,12 +37,15 @@ Argument | Details | Default
 `--iter` | number of iterations to run the model for | 1500 
 `--save_folder` | Directory to save checkpoint | CURRENT_DIR 
 
-After model has been trained, meta_files are saved into 'save_folder'. To test the model, run the command with the following arguments:<br />
-`python Running.py` <br />
-`--in_dir=DIRECTORY_NAME`		(directory containing unlabeled test data)<br />
-`--meta_file=LOCATION_OF_META_FILE` 	(path for meta_file)<br />
-`--CP_dir=DIRECTORY_NAME` 		(directory containing checkpoints)<br />
-`--save_dir=DIRECTORY_NAME` 		(directory to save output images)<br />
+After model has been trained, meta_files are saved into 'save_folder'. To test the model, run the command with the following arguments:
+`python Running.py` 
+
+Argument | Details | Default
+--- | --- | --- 
+`--in_dir` | directory containing unlabeled test data |*cracky_test* 
+`--meta_file` | MetaFile path | None (Will throw Error if not given)
+`--CP_dir` | dir contatining checkpoint | None (Will throw Error if not given)
+`--save_dir` | dir to save output images | CURRENT_DIR  
 
 ## TODO:
 
