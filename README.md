@@ -43,8 +43,8 @@ After model has been trained, meta_files are saved into 'save_folder'. To test t
 Argument | Details | Default
 --- | --- | --- 
 `--in_dir` | directory containing unlabeled test data |*cracky_test* 
-`--meta_file` | MetaFile path | None (Will throw Error if not given)
-`--CP_dir` | dir contatining checkpoint | None (Will throw Error if not given)
+`--meta_file` | MetaFile path | None (Will throw error if not given)
+`--CP_dir` | dir contatining checkpoint | None (Will throw error if not given)
 `--save_dir` | dir to save output images | CURRENT_DIR  
 
 ## TODO:
