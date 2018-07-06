@@ -305,7 +305,7 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description='Training Network')
     parser.add_argument('--in_dir',dest='in_dir',type=str,default='cracky')
     parser.add_argument('--iter',dest='num_iterations',type=int,default=1500)
-    parser.add_argument('--save_folder',dest='save_folder',tpe=str,default=os.getcwd())
+    parser.add_argument('--save_folder',dest='save_folder',type=str,default=os.getcwd())
     return parser.parse_args()
             
 def  main(args):

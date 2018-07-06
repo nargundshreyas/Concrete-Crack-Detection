@@ -104,12 +104,11 @@ def main(args):
     with graph.as_default():
         with tf.Session() as sess:
             #import the model dir
-            file_=Path(args.meta_file)
             try:
+                file_=Path(args.meta_file)
                 abs_path=file_.resolve()
             except FileNotFoundError:
-                print('Meta File Not found')
-                sys.exit()
+                sys.exit('Meta File Not found')
             else:
                 imported_meta = tf.train.import_meta_graph(args.meta_file)
                        

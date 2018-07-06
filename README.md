@@ -30,9 +30,11 @@ The directory structure is assumed to be the following- (For example considering
   
 To train the network run the command with the following arguments:<br />
 `python Train_CD.py`<br />
-`--in_dir=DIRECTORY_NAME`		(directory containing training data)<br />
-`--iter=NUMBER_OF_ITERATIONS` 		(number of training iterations. Default-1500)<br />
-`--save_folder=DIRECTORY_NAME` 		(directory to save meta files and checkpoints)<br />
+| Argument | Details | Default
+| :---: | :---: | :---: |
+| `--in_dir` | path to *in_dir* folder | *cracky* |
+| `--iter` | number of iterations to run the model for | 1500 |
+| `--save_folder` | Directory to save checkpoint | CURRENT_DIR |
 
 After model has been trained, meta_files are saved into 'save_folder'. To test the model, run the command with the following arguments:<br />
 `python Running.py` <br />
